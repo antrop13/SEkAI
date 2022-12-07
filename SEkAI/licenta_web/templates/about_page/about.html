@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}About project{% endblock %}
+{% block head %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <link rel="stylesheet" href="{{url_for('static', filename='about/assets/bootstrap/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='about/assets/css/Footer-Basic.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='about/assets/css/Login-Form-Dark.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='about/assets/css/Registration-Form-with-Photo.css')}}">
+{% endblock %}
+
+{% block content %}
+    <main style="width: 100%;height: 20%;">
+        <section class="register-photo" style="background: repeating-linear-gradient(rgb(137, 44, 220) 0%, rgb(0,0,0) 54%, rgb(137, 44, 220) 100%), rgb(0, 0, 0);height: 79vh;">
+            <div class="d-flex flex-row" id="centered" style="background: transparent;position: absolute;top: 30%;left: 50%;transform: translate(-50%);"><img class="img-thumbnail img-fluid" alt="imagine" style="width: 100px;height: 100px;border-width: 11px;border-color: white;background: #ffffff;border: none;text-decoration: none;display: block;top: 50%;transform: translate(-10%, 50%);" src="{{url_for('static', filename='about/assets/img/logo_final_ajustat.png')}}">
+                <p style="color: rgb(255,255,255);font-family: Helvetica Neue;margin: auto;text-align: center;color: white;font-family: 'Helvetica Neue';font-size: 1.2vw;font-weight: 450;letter-spacing: 3px;">The name of the project is<br>formed as follows:<br>- S comes from songs<br>- EkAI comes from the father<br>of facial emotion, Paul Ekman.<br>Since this is AI based,<br>it won't be a "man", but an<br>EkAI.</p>
+            </div>
+        </section>
+    </main>
+<script src="{{url_for('static', filename='about/assets/bootstrap/js/bootstrap.min.js')}}"></script>
+{% endblock %}
