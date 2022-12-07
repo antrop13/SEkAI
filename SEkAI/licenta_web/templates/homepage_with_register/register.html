@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+{% block head %}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+<link rel="stylesheet" href="{{url_for('static', filename='register/assets/bootstrap/css/bootstrap.min.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename='register/assets/css/Footer-Basic.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename='register/assets/css/Login-Form-Dark.css')}}">
+{% endblock %}
+
+{% block content %}
+<main style="width: 100%;height: 20%;">
+    <section class="login-dark">
+        <form method="post" style="background: transparent;border-radius: 10px;">
+            <h2 class="visually-hidden">Login Form</h2>
+            <div class="illustration">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"
+                     class="bi bi-key" style="color: rgb(255,255,255);/*transform: rotate(0deg);*/">
+                    <path d="M0 8a4 4 0 0 1 7.465-2H14a.5.5 0 0 1 .354.146l1.5 1.5a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0L13 9.207l-.646.647a.5.5 0 0 1-.708 0L11 9.207l-.646.647a.5.5 0 0 1-.708 0L9 9.207l-.646.647A.5.5 0 0 1 8 10h-.535A4 4 0 0 1 0 8zm4-3a3 3 0 1 0 2.712 4.285A.5.5 0 0 1 7.163 9h.63l.853-.854a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.793-.793-1-1h-6.63a.5.5 0 0 1-.451-.285A3 3 0 0 0 4 5z"></path>
+                    <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"></path>
+                </svg>
+            </div>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <p style="text-align: center;margin: auto;">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <div class="mb-3"><input class="form-control" type="text"
+                                     style="background: rgb(137, 44, 220);border-radius: 20px;" placeholder="Username"
+                                     name="username" autofocus="" required=""></div>
+            <div class="mb-3"><input class="form-control" type="password" name="password" placeholder="Password"
+                                     style="background: rgb(137, 44, 220);border-radius: 20px;" required=""></div>
+            <div class="mb-3">
+                <button class="btn btn-primary d-block w-100" type="submit"
+                        style="background: rgb(82, 5, 123);border-radius: 10px;">Register
+                </button>
+            </div>
+        </form>
+    </section>
+</main>
+<script src="{{url_for('static', filename='register/assets/bootstrap/js/bootstrap.min.js')}}"></script>
+{% endblock %}

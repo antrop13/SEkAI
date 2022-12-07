@@ -1,0 +1,550 @@
+{% extends "base.html" %}
+{% block title %}Song Recommandation{% endblock %}
+{% block head %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <link rel="stylesheet" href="{{url_for('static', filename='new_recom/assets/bootstrap/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='new_recom/assets/fonts/fontawesome-all.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='new_recom/assets/fonts/font-awesome.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='new_recom/assets/fonts/fontawesome5-overrides.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='new_recom/assets/css/Footer-Basic.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='new_recom/assets/css/Login-Form-Dark.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='new_recom/assets/css/Registration-Form-with-Photo.css')}}">
+{% endblock %}
+{% block content %}
+    <main style="width: 100%;height: 20%;">
+        <section class="register-photo" style="background-image: url({{ url_for('static', filename='new_recom/assets/img/recom_bgd.jpg')}});height: 80vh;background-repeat: no-repeat;background-size: cover;">
+            <div id="centered" style="width: 700px;">
+                <p id="emotion_quote" style="font-size: 20px; font-weight: bold;font-style: italic;color: white;width: 700px;height: 50px;margin-bottom: 10px;">Your emotion is: {{emotion}}. Here are some songs that might help you!<br>Like or dislike a song to get new ones on next refresh!</p>
+                <div id="all_songs" style="height: 280px;width: 660px;">
+                    <div id="knowledge" style="height: 140px;width: 700px;">
+                        <p style="text-decoration: underline;height: 20px;font-weight: bold;font-style: italic;width: 700px;color: white;">Based on what you like</p>
+                        <div id="knowledge-songs" style="display: flex;flex-direction: row;width: 700px;height: 120px;justify-content: space-evenly;color: white;">
+                            <div id="know-song-1" style="display: flex;flex-direction: column;justify-content: space-evenly;height: 130px;width: 171px;">
+                                <div id="player-1" style="background: var(--bs-blue);height: 100px;width: 170px;"></div>
+                                <div id="icons-1" style="display: flex;flex-direction: row;justify-content: space-evenly;height: 20px;"><i class="far fa-thumbs-up" id="ksu-1"></i><i class="fa fa-thumbs-o-down" id="ksd-1"></i></div>
+                                <span style="display: none">{{song_id1}}</span>
+                            </div>
+                            <div id="know-song-2" style="display: flex;flex-direction: column;justify-content: space-evenly;height: 130px;width: 171px;">
+                                <div id="player-2" style="background: var(--bs-blue);height: 100px;width: 170px;"></div>
+                                <div id="icons-2" style="display: flex;flex-direction: row;justify-content: space-evenly;height: 20px;"><i class="far fa-thumbs-up" id="ksu-2"></i><i class="fa fa-thumbs-o-down" id="ksd-2"></i></div>
+                                <span style="display: none">{{song_id2}}</span>
+                            </div>
+                            <div id="know-song-3" style="display: flex;flex-direction: column;justify-content: space-evenly;height: 130px;width: 171px;">
+                                <div id="player-3" style="background: var(--bs-blue);height: 100px;width: 170px;"></div>
+                                <div id="icons-3" style="display: flex;flex-direction: row;justify-content: space-evenly;height: 20px;"><i class="far fa-thumbs-up" id="ksu-3"></i><i class="fa fa-thumbs-o-down" id="ksd-3"></i></div>
+                                <span style="display: none">{{song_id3}}</span>
+                            </div>
+                            <div id="know-song-4" style="display: flex;flex-direction: column;justify-content: space-evenly;height: 130px;width: 171px;">
+                                <div id="player-4" style="background: var(--bs-blue);height: 100px;width: 170px;"></div>
+                                <div id="icons-4" style="display: flex;flex-direction: row;justify-content: space-evenly;height: 20px;"><i class="far fa-thumbs-up" id="ksu-4"></i><i class="fa fa-thumbs-o-down" id="ksd-4"></i></div>
+                                <span style="display: none">{{song_id4}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="popularity" style="height: 140px;margin-top: 10px;margin-bottom: 10px;color: white;width: 700px;">
+                        <p style="text-decoration: underline;height: 20px;font-weight: bold;font-style: italic;width: 700px;color: white;">Based on what others like</p>
+                        <div id="popularity-songs" style="display: flex;flex-direction: row;width: 700px;height: 120px;justify-content: space-evenly;">
+                            <div id="pop-song-1" style="display: flex;flex-direction: column;justify-content: space-evenly;height: 130px;width: 171px;">
+                                <div id="poplayer-1" style="background: var(--bs-blue);height: 100px;width: 170px;"></div>
+                                <div id="picons-1" style="display: flex;flex-direction: row;justify-content: space-evenly;height: 20px;"><i class="far fa-thumbs-up" id="psu-1"></i><i class="fa fa-thumbs-o-down" id="psd-1"></i></div>
+                                <span style="display: none">{{song_pid1}}</span>
+                            </div>
+                            <div id="pop-song-2" style="display: flex;flex-direction: column;justify-content: space-evenly;height: 130px;width: 171px;">
+                                <div id="poplayer-2" style="background: var(--bs-blue);height: 100px;width: 170px;"></div>
+                                <div id="picons-2" style="display: flex;flex-direction: row;justify-content: space-evenly;height: 20px;"><i class="far fa-thumbs-up" id="psu-2"></i><i class="fa fa-thumbs-o-down" id="psd-2"></i></div>
+                                <span style="display: none">{{song_pid2}}</span>
+                            </div>
+                            <div id="pop-song-3" style="display: flex;flex-direction: column;justify-content: space-evenly;height: 130px;width: 171px;">
+                                <div id="poplayer-3" style="background: var(--bs-blue);height: 100px;width: 170px;"></div>
+                                <div id="picons-3" style="display: flex;flex-direction: row;justify-content: space-evenly;height: 20px;"><i class="far fa-thumbs-up" id="psu-3"></i><i class="fa fa-thumbs-o-down" id="psd-3"></i></div>
+                                <span style="display: none">{{song_pid3}}</span>
+                            </div>
+                            <div id="pop-song-4" style="display: flex;flex-direction: column;justify-content: space-evenly;height: 130px;width: 171px;">
+                                <div id="poplayer-4" style="background: var(--bs-blue);height: 100px;width: 170px;"></div>
+                                <div id="picons-4" style="display: flex;flex-direction: row;justify-content: space-evenly;height: 20px;"><i class="far fa-thumbs-up" id="psu-4"></i><i class="fa fa-thumbs-o-down" id="psd-4"></i></div>
+                                <span style="display: none">{{song_pid4}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="buttons" style="text-align: end;height: 40px;margin-top: 40px;">
+                    <div class="btn-group" role="group" id="button-group"><button class="btn btn-primary" onclick="location.href = '{{url_for('emotion_recognition')}}';" id="mood-change-btn" type="button" style="background: rgb(188, 111, 241);border-radius: 10px;margin-right: 10px;">I changed my mood</button><button class="btn btn-primary" onClick="window.location.reload();" id="song-change-btn" type="button" style="background: rgb(188, 111, 241);border-radius: 10px;">More songs!</button></div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script>
+
+        // 2. This code loads the IFrame Player API code asynchronously.
+        var tag = document.createElement('script');
+
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        // 3. This function creates an <iframe> (and YouTube player)
+        //    after the API code downloads.
+        var player1, player2, player3, player3, player4, player5, player6, player7, player8;
+
+        function onYouTubeIframeAPIReady() {
+            player1 = new YT.Player('player-1', {
+                height: '100',
+                width: '170',
+                videoId: '{{id1}}',
+                playerVars: {
+                    'playsinline': 1,
+                    'autoplay' : 0,
+                    'controls': 1
+                },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+
+            player2 = new YT.Player('player-2', {
+                height: '100',
+                width: '170',
+                videoId: '{{id2}}',
+                playerVars: {
+                    'playsinline': 1,
+                    'autoplay' : 0,
+                    'controls': 1
+                },
+                events: {
+                    'onReady': onPlayerReady2,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+
+            player3 = new YT.Player('player-3', {
+                height: '100',
+                width: '170',
+                videoId: '{{id3}}',
+                playerVars: {
+                    'playsinline': 1,
+                    'autoplay' : 0,
+                    'controls': 1
+                },
+                events: {
+                    'onReady': onPlayerReady3,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+
+            player4 = new YT.Player('player-4', {
+                height: '100',
+                width: '170',
+                videoId: '{{id4}}',
+                playerVars: {
+                    'playsinline': 1,
+                    'autoplay' : 0,
+                    'controls': 1
+                },
+                events: {
+                    'onReady': onPlayerReady4,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+
+            player5 = new YT.Player('poplayer-1', {
+                height: '100',
+                width: '170',
+                videoId: '{{pid1}}',
+                playerVars: {
+                    'playsinline': 1,
+                    'autoplay' : 0,
+                    'controls': 1
+                },
+                events: {
+                    'onReady': onPlayerReady5,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+
+            player6 = new YT.Player('poplayer-2', {
+                height: '100',
+                width: '170',
+                videoId: '{{pid2}}',
+                playerVars: {
+                    'playsinline': 1,
+                    'autoplay' : 0,
+                    'controls': 1
+                },
+                events: {
+                    'onReady': onPlayerReady6,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+
+            player7 = new YT.Player('poplayer-3', {
+                height: '100',
+                width: '170',
+                videoId: '{{pid3}}',
+                playerVars: {
+                    'playsinline': 1,
+                    'autoplay' : 0,
+                    'controls': 1
+                },
+                events: {
+                    'onReady': onPlayerReady7,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+
+            player8 = new YT.Player('poplayer-4', {
+                height: '100',
+                width: '170',
+                videoId: '{{pid4}}',
+                playerVars: {
+                    'playsinline': 1,
+                    'autoplay' : 0,
+                    'controls': 1
+                },
+                events: {
+                    'onReady': onPlayerReady8,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+
+        }
+
+
+        // 4. The API will call this function when the video player is ready.
+        function onPlayerReady(event) {
+            // event.target.playVideo();
+            event.target.CueVideoById("{{id1}}")
+        }
+        function onPlayerReady2(event) {
+            event.target.CueVideoById("{{id2}}")
+        }
+        function onPlayerReady3(event) {
+            event.target.CueVideoById("{{id3}}")
+        }
+        function onPlayerReady4(event) {
+            event.target.CueVideoById("{{id4}}")
+        }
+        function onPlayerReady5(event) {
+            event.target.CueVideoById("{{pid1}}")
+        }
+        function onPlayerReady6(event) {
+            event.target.CueVideoById("{{pid2}}")
+        }
+        function onPlayerReady7(event) {
+            event.target.CueVideoById("{{pid3}}")
+        }
+        function onPlayerReady8(event) {
+            event.target.CueVideoById("{{pid4}}")
+        }
+
+        // 5. The API calls this function when the player's state changes.
+        //    The function indicates that when playing a video (state=1),
+        //    the player should play for six seconds and then stop.
+        //var done = false;
+
+        function onPlayerStateChange(event) {
+            if (event.data == YT.PlayerState.PLAYING && !done) {
+                setTimeout(stopVideo, 6000);
+                done = true;
+            }
+        }
+
+        //function stopVideo() {
+        //    player.stopVideo();
+        //}
+    </script>
+
+    <script>
+        $(function (){
+            $('#centered').hide().show(1000);
+            $('#ksu-1').on('click', function () {
+                var nume = $(this).parent().parent().children()[2].textContent;
+                $('#ksu-1').css({color:'red'});
+                $('#ksd-1').css({color:'white'});
+                $.ajax({
+                    type: 'POST',
+                    url: '/song_stats',
+                    data:{ 'song_id' : nume,
+                            'liked': 1,
+                            'disliked': 0},
+                    dataType: 'text',
+                    success: function (data){
+                    },
+                    error: function() {
+                    }
+                });
+            });
+
+            $('#ksd-1').on('click', function () {
+                var nume = $(this).parent().parent().children()[2].textContent;
+                $('#ksd-1').css({color:'red'});
+                $('#ksu-1').css({color:'white'})
+                $.ajax({
+                    type: 'POST',
+                    url: '/song_stats',
+                    data:{ 'song_id' : nume,
+                            'liked': 0,
+                            'disliked': 1},
+                    dataType: 'text',
+                    success: function (data){
+                    },
+                    error: function() {
+                    }
+                });
+            });
+            ////////////////////////////////////
+            $('#ksu-2').on('click', function () {
+                var nume = $(this).parent().parent().children()[2].textContent;
+                $('#ksu-2').css({color:'red'});
+                $('#ksd-2').css({color:'white'})
+                $.ajax({
+                    type: 'POST',
+                    url: '/song_stats',
+                    data:{ 'song_id' : nume,
+                            'liked': 1,
+                            'disliked': 0},
+                    dataType: 'text',
+                    success: function (data){
+                    },
+                    error: function() {
+                    }
+                });
+            });
+            $('#ksd-2').on('click', function () {
+                var nume = $(this).parent().parent().children()[2].textContent;
+                $('#ksd-2').css({color:'red'});
+                $('#ksu-2').css({color:'white'})
+                $.ajax({
+                    type: 'POST',
+                    url: '/song_stats',
+                    data:{ 'song_id' : nume,
+                            'liked': 0,
+                            'disliked': 1},
+                    dataType: 'text',
+                    success: function (data){
+                    },
+                    error: function() {
+                    }
+                });
+            });
+            ////////////////////////////////////
+            $('#ksu-3').on('click', function () {
+                var nume = $(this).parent().parent().children()[2].textContent;
+                $('#ksu-3').css({color:'red'});
+                $('#ksd-3').css({color:'white'})
+                $.ajax({
+                    type: 'POST',
+                    url: '/song_stats',
+                    data:{ 'song_id' : nume,
+                            'liked': 1,
+                            'disliked': 0},
+                    dataType: 'text',
+                    success: function (data){
+                    },
+                    error: function() {
+                    }
+                });
+            });
+            $('#ksd-3').on('click', function () {
+                var nume = $(this).parent().parent().children()[2].textContent;
+                $('#ksd-3').css({color:'red'});
+                $('#ksu-3').css({color:'white'})
+                $.ajax({
+                    type: 'POST',
+                    url: '/song_stats',
+                    data:{ 'song_id' : nume,
+                            'liked': 0,
+                            'disliked': 1},
+                    dataType: 'text',
+                    success: function (data){
+                    },
+                    error: function() {
+                    }
+                });
+            });
+            ////////////////////////////////////
+            $('#ksu-4').on('click', function () {
+                var nume = $(this).parent().parent().children()[2].textContent;
+                $('#ksu-4').css({color:'red'});
+                $('#ksd-4').css({color:'white'})
+                $.ajax({
+                    type: 'POST',
+                    url: '/song_stats',
+                    data:{ 'song_id' : nume,
+                            'liked': 1,
+                            'disliked': 0},
+                    dataType: 'text',
+                    success: function (data){
+                    },
+                    error: function() {
+                    }
+                });
+            });
+            $('#ksd-4').on('click', function () {
+                var nume = $(this).parent().parent().children()[2].textContent;
+                $('#ksd-4').css({color:'red'});
+                $('#ksu-4').css({color:'white'})
+                $.ajax({
+                    type: 'POST',
+                    url: '/song_stats',
+                    data:{ 'song_id' : nume,
+                            'liked': 0,
+                            'disliked': 1},
+                    dataType: 'text',
+                    success: function (data){
+                    },
+                    error: function() {
+                    }
+                });
+            });
+            //##########################################//
+            //##########################################//
+            //##########################################//
+            //##########################################//
+            $('#psu-1').on('click', function () {
+                var nume = $(this).parent().parent().children()[2].textContent;
+                $('#psu-1').css({color:'red'});
+                $('#psd-1').css({color:'white'})
+                $.ajax({
+                    type: 'POST',
+                    url: '/song_stats',
+                    data:{ 'song_id' : nume,
+                            'liked': 1,
+                            'disliked': 0},
+                    dataType: 'text',
+                    success: function (data){
+                    },
+                    error: function() {
+                    }
+                });
+            });
+            $('#psd-1').on('click', function () {
+                var nume = $(this).parent().parent().children()[2].textContent;
+                $('#psd-1').css({color:'red'});
+                $('#psu-1').css({color:'white'})
+                $.ajax({
+                    type: 'POST',
+                    url: '/song_stats',
+                    data:{ 'song_id' : nume,
+                            'liked': 0,
+                            'disliked': 1},
+                    dataType: 'text',
+                    success: function (data){
+                    },
+                    error: function() {
+                    }
+                });
+            });
+            ////////////////////////////////////
+            $('#psu-2').on('click', function () {
+                var nume = $(this).parent().parent().children()[2].textContent;
+                $('#psu-2').css({color:'red'});
+                $('#psd-2').css({color:'white'})
+                $.ajax({
+                    type: 'POST',
+                    url: '/song_stats',
+                    data:{ 'song_id' : nume,
+                            'liked': 1,
+                            'disliked': 0},
+                    dataType: 'text',
+                    success: function (data){
+                    },
+                    error: function() {
+                    }
+                });
+            });
+            $('#psd-2').on('click', function () {
+                var nume = $(this).parent().parent().children()[2].textContent;
+                $('#psd-2').css({color:'red'});
+                $('#psu-2').css({color:'white'})
+                $.ajax({
+                    type: 'POST',
+                    url: '/song_stats',
+                    data:{ 'song_id' : nume,
+                            'liked': 0,
+                            'disliked': 1},
+                    dataType: 'text',
+                    success: function (data){
+                    },
+                    error: function() {
+                    }
+                });
+            });
+            ////////////////////////////////////
+            $('#psu-3').on('click', function () {
+                var nume = $(this).parent().parent().children()[2].textContent;
+                $('#psu-3').css({color:'red'});
+                $('#psd-3').css({color:'white'})
+                $.ajax({
+                    type: 'POST',
+                    url: '/song_stats',
+                    data:{ 'song_id' : nume,
+                            'liked': 1,
+                            'disliked': 0},
+                    dataType: 'text',
+                    success: function (data){
+                    },
+                    error: function() {
+                    }
+                });
+            });
+            $('#psd-3').on('click', function () {
+                var nume = $(this).parent().parent().children()[2].textContent;
+                $('#psd-3').css({color:'red'});
+                $('#psu-3').css({color:'white'})
+                $.ajax({
+                    type: 'POST',
+                    url: '/song_stats',
+                    data:{ 'song_id' : nume,
+                            'liked': 0,
+                            'disliked': 1},
+                    dataType: 'text',
+                    success: function (data){
+                    },
+                    error: function() {
+                    }
+                });
+            });
+            ////////////////////////////////////
+            $('#psu-4').on('click', function () {
+                var nume = $(this).parent().parent().children()[2].textContent;
+                $('#psu-4').css({color:'red'});
+                $('#psd-4').css({color:'white'})
+                $.ajax({
+                    type: 'POST',
+                    url: '/song_stats',
+                    data:{ 'song_id' : nume,
+                            'liked': 1,
+                            'disliked': 0},
+                    dataType: 'text',
+                    success: function (data){
+                    },
+                    error: function() {
+                    }
+                });
+            });
+            $('#psd-4').on('click', function () {
+                var nume = $(this).parent().parent().children()[2].textContent;
+                $('#psd-4').css({color:'red'});
+                $('#psu-4').css({color:'white'})
+                $.ajax({
+                    type: 'POST',
+                    url: '/song_stats',
+                    data:{ 'song_id' : nume,
+                            'liked': 0,
+                            'disliked': 1},
+                    dataType: 'text',
+                    success: function (data){
+                    },
+                    error: function() {
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script src="{{url_for('static', filename='new_recom/assets/bootstrap/js/bootstrap.min.js')}}"></script>
+{% endblock %}

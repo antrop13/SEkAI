@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% block head %}
+        <title>{% block title %}{% endblock %}</title>
+        {% endblock %}
+        <style>
+            .dropbtn {
+                color: white;
+            }
+            .dropdown {
+                display: inline-block;
+                position: relative
+            }
+            .dropdown-content {
+                position: absolute;
+                background-color: #150050;
+                display: none;
+                z-index: 1;
+            }
+            .dropdown-content a {
+                color: white;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+            .dropdown-content a:hover {
+                background-color: #610094;
+            }
+            .dropdown:hover .dropdown-content {
+                display: block;
+            }
+            .dropdown:hover .dropbtn {
+                background-color: #3F0071;
+            }
+        </style>
+    </head>
+    <body>
+    <header>
+            <nav class="navbar navbar-light navbar-expand-md" style="background: rgb(137, 44, 220);">
+                <!---To display about page upon login otherwise display login-->
+                {% if session['username'] %}
+                        <div class="container-fluid"><a href="/about"><img src="{{url_for('static', filename='login/assets/img/logo_final_ajustat.png')}}" style="width: 56px;height: 56px;" alt="logo"></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1" style="color: rgba(255,255,255,0.9);background: rgba(255,255,255,0.9);"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+                            <div class="collapse navbar-collapse" id="navcol-1">
+                                <ul class="navbar-nav ms-auto">
+                                <li class="nav-item">
+                                    <div class="dropdown">
+                                        <a class="nav-link active dropbtn" href="/about" style="color: rgba(255,255,255,0.9);">Hello, {{session['username']}}!</a>
+                                        <div class="dropdown-content">
+                                            <a href="/preferences">Your profile</a>
+                                            <a href="/logout">Logout</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="nav-item"><a class="nav-link" href="/emotion_recognition" style="color: rgba(255,255,255,0.9);">Emotion Recognition</a></li>
+                                <li class="nav-item"><a class="nav-link" href="/songs" style="color: rgba(255,255,255,0.9);">Song Recommendation</a></li>
+                            {% else %}
+                            <div class="container-fluid"><a href="/"><img src="{{url_for('static', filename='login/assets/img/logo_final_ajustat.png')}}" style="width: 56px;height: 56px;" alt="logo"></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1" style="color: rgba(255,255,255,0.9);background: rgba(255,255,255,0.9);"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+                                <div class="collapse navbar-collapse" id="navcol-1">
+                                    <ul class="navbar-nav ms-auto">
+                                        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+                                        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+                                        <li class="nav-item"><a class="nav-link active" href="/" style="color: rgba(255,255,255,0.9);">Home</a></li>
+                                        <li class="nav-item"><a class="nav-link myAlert" href="/" style="color: rgba(255,255,255,0.9);">Emotion Recognition</a></li>
+                                        <li class="nav-item"><a class="nav-link myAlert" href="/" style="color: rgba(255,255,255,0.9);">Song Recommendation</a></li>
+                                        <script>
+                                   $(".myAlert").click(function() {
+                                      alert("Please first log in!");
+                                   });
+                                </script>
+                            {% endif %}
+                                <li class="nav-item"><a class="nav-link" href="/about" style="color: rgba(255,255,255,0.9);">About</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+    {% block content %}
+    {% endblock %}
+    <footer class="footer-basic" style="background: rgb(137, 44, 220);">
+        <p class="copyright" style="color: rgb(255,255,255);">SEkAI Project by Luca Mihai-Octavian@mta.ro © 2021</p>
+    </footer>
+    </body>
+</html>

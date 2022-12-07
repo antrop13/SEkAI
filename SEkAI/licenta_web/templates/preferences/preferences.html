@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Preferences{% endblock %}
+{% block head %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>preferences</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='/preferences/assets/bootstrap/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='/preferences/assets/css/Footer-Basic.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='/preferences/assets/css/Login-Form-Dark.css')}}">
+{% endblock %}
+
+{% block content %}
+    <main style="width: 100%;height: 20%;">
+        <section class="login-dark">
+            <form id="preferences" style="margin-right: auto;margin-left: auto;" action="{{url_for('preferences_update')}}" method="post">
+                <h5>Favorite song name</h5><select class="form-select" id="song_name" required="" value="Favourite song name" name="song_name">
+                    {% for song in song_names %}
+                        <option value="{{song}}">{{song}}</option>
+                    {% endfor %}
+                </select>
+                <h5 style="margin-top: 14px;">Favorite artist/band name</h5><select class="form-select" id="artist_name" required="" name="artist_name">
+                    {% for artist in artist_names %}
+                    <option value="{{artist}}">{{artist}}</option>
+                    {% endfor %}
+                </select>
+                <h5 style="margin-top: 14px;">Favorite genre</h5><select class="form-select" id="genre_name" required="" name="genre_name">
+                    {% for genre in genre_names %}
+                        <option value="{{genre}}">{{genre}}</option>
+                    {% endfor %}
+                </select><input class="form-control" type="text" id="min_year" placeholder="Minimum year of the song" maxlength="4" minlength="4" pattern="^(19|20)\d{2}$" required="" name="min_year" style="margin-top: 14px;">
+                <div id="buttons" style="margin-top: 20px;/*justify-content: space-between;*/width: 240px;"><a href="/logout"><button class="btn btn-outline-primary align-items-stretch" id="logout" type="button" style="width: 86px;">Sign out</button></a><button class="btn btn-outline-primary" id="save" type="submit" style="width: 146px;margin-left: 8px;">Save preferences</button></div>
+            </form>
+        </section>
+    </main>
+    <script src="{{url_for('static', filename='/preferences/assets/bootstrap/js/bootstrap.min.js')}}"></script>
+{% endblock %}
